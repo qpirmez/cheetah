@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Named Entity Recognizer
+  p Named Entity Recognition is a crucial technology for NLP. Whatever you're doing with text, you usually want to handle names, numbers, dates and other entities differently from regular words.
+
+  div(class='ui form')
+    textarea(id='input' placeholder='Enter your text here')
+    button(type='submit' class='ui blue labeled submit icon button' id='submit') Submit
+      i(class='icon edit')
+  
+  div(class='entities' id='displacy')
+    
+
+
+
