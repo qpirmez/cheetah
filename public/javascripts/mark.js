@@ -58,25 +58,36 @@ function snapSelectionToWord() {
 
 
 $('#sampleText').mouseup(function(){
-    //var selection = getSelectedText();
     var selection = snapSelectionToWord();
     var selection_text = selection.toString();
-    var tag = selection ? selection.baseNode.parentNode.tagName : null
+    var tag = selection ? selection.baseNode.parentNode.tagName : null;
     
+    console.log(tag);
+            
     if(tag == "MARK"){
-    	var span = selection.baseNode.parentNode
-    	var text = span.textContent || span.innerText;
+    	var mark = selection.baseNode.parentNode;
+    	var text = selection.baseNode.textContent;    	
     	var node = document.createTextNode(text)
-    	span.parentNode.replaceChild(node, span);   	
+    	mark.parentNode.replaceChild(node, mark);   	
     } else {
     	//Add a span around the selected text?
     	if ($.trim(selection_text).length > 0){
-    		var span = document.createElement('mark');
-    		span.textContent = selection_text;	
+    		var mark = document.createElement('mark');
+    		var spanText = document.createElement('span');
+    		var spanTag = document.createElement("span"); 
+  		
+  		    mark.textContent = selection_text;
+    		//spanText.textContent = selection_text;
+    		mark.classList.add("c0137");
+    		//mark.appendChild(spanText);
+    			
+    		spanTag.textContent = "AAA";
+    		spanTag.classList.add("c0141");
+    		mark.appendChild(spanTag);
     		
     		var range = selection.getRangeAt(0);
     		range.deleteContents();
-    		range.insertNode(span);
+    		range.insertNode(mark);
     	}
     }
     

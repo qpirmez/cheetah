@@ -7,6 +7,27 @@
     line-height: 2;
 }
 
+.c0137 {
+    color: inherit;
+    margin: 0 3px;
+    display: inline;
+    padding: 5px 8px;
+    background: #ffe184;
+    font-weight: bold;
+    line-height: 1;
+    -webkit-box-decoration-break: clone;
+}
+
+.c0141 {
+    color: #583fcf;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Roboto Condensed", "Arial Narrow", sans-serif;
+    margin-left: 8px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
 .radio-toolbar input[type="radio"] {
   display: none;
 }
