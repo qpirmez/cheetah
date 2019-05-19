@@ -62,7 +62,7 @@ $('#sampleText').mouseup(function(){
     var selection_text = selection.toString();
     var tag = selection ? selection.baseNode.parentNode.tagName : null;
     
-    console.log(tag);
+    console.log(selection);
             
     if(tag == "MARK"){
     	var mark = selection.baseNode.parentNode;
