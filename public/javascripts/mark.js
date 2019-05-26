@@ -1,11 +1,4 @@
 // Simple selection function
-function getSelectedText() {
-  t = (document.all) ? document.selection.createRange().text : document.getSelection();
-
-  return t;
-}
-
-// More evolved selection function (
 function snapSelectionToWord() {
     var sel;
 
@@ -25,7 +18,7 @@ function snapSelectionToWord() {
             // modify() works on the focus of the selection
             var endNode = sel.focusNode, endOffset = sel.focusOffset;
             sel.collapse(sel.anchorNode, sel.anchorOffset);
-
+            
             var direction = [];
             if (backwards) {
                 direction = ['backward', 'forward'];
@@ -38,8 +31,8 @@ function snapSelectionToWord() {
             sel.extend(endNode, endOffset);
             sel.modify("extend", direction[1], "character");
             sel.modify("extend", direction[0], "word");
-            return sel;
         }
+        return sel;
     } else if ( (sel = document.selection) && sel.type != "Control") {
         var textRange = sel.createRange();
         if (textRange.text) {
@@ -52,36 +45,63 @@ function snapSelectionToWord() {
             return textRange.select();
         }
     }
-    
-    return '';
 }
 
+function getLabel(){
+	
+	var label;
+	
+	if (document.getElementById('radio1').checked) {
+		label = document.getElementById('radio1').value;
+	} else if (document.getElementById('radio2').checked) {
+		label = document.getElementById('radio2').value;
+	} else if (document.getElementById('radio3').checked) {
+		label = document.getElementById('radio3').value;
+	} else if (document.getElementById('radio4').checked) {
+		label = document.getElementById('radio4').value;
+	} else if (document.getElementById('radio5').checked) {
+		label = document.getElementById('radio5').value;
+	}
+	
+	return label;
 
-$('#sampleText').mouseup(function(){
+}
+
+function wrap(){
     var selection = snapSelectionToWord();
     var selection_text = selection.toString();
-    var tag = selection ? selection.baseNode.parentNode.tagName : null;
+    var tag;
+    var mark;
+    var p;
+    var text;
+    var node;
+    var spanText;
+    var spanTag;
     
-    console.log(selection);
-            
-    if(tag == "MARK"){
-    	var mark = selection.baseNode.parentNode;
-    	var text = selection.baseNode.textContent;    	
-    	var node = document.createTextNode(text)
+    
+    if(selection){
+       if(selection.anchorNode.parentNode.tagName == "MARK"){mark = selection.anchorNode.parentNode;} 
+       else if(selection.anchorNode.nextSibling && selection.anchorNode.nextSibling.tagName == "MARK" ) {mark = selection.anchorNode.nextSibling;}
+       else if(selection.focusNode.parentNode.tagName == "MARK"){mark = selection.focusNode.parentNode;}
+       else if(selection.focusNode.nextSibling && selection.focusNode.nextSibling.tagName == "MARK"){mark = selection.focusNode.nextSibling;} 
+    }  
+    
+    if(mark){
+    	p = mark.parentNode;
+    	text = mark.firstChild.data; 
+    	node = document.createTextNode(text)
     	mark.parentNode.replaceChild(node, mark);   	
     } else {
     	//Add a span around the selected text?
-    	if ($.trim(selection_text).length > 0){
-    		var mark = document.createElement('mark');
-    		var spanText = document.createElement('span');
-    		var spanTag = document.createElement("span"); 
+    	if (selection_text.length > 0){
+    		mark = document.createElement('mark');
+    		spanText = document.createElement('span');
+    		spanTag = document.createElement("span"); 
   		
   		    mark.textContent = selection_text;
-    		//spanText.textContent = selection_text;
     		mark.classList.add("c0137");
-    		//mark.appendChild(spanText);
     			
-    		spanTag.textContent = "AAA";
+    		spanTag.textContent = getLabel();
     		spanTag.classList.add("c0141");
     		mark.appendChild(spanTag);
     		
@@ -90,6 +110,4 @@ $('#sampleText').mouseup(function(){
     		range.insertNode(mark);
     	}
     }
-    
-
-});
+}
