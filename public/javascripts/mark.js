@@ -111,3 +111,20 @@ function wrap(){
     	}
     }
 }
+
+function accept(){
+	var p = document.getElementById("sampleText");
+	var sampleText = "";
+	if (p.childElementCount > 0){
+		for (let node of p.childNodes) {
+		  if(node.nodeType == 3){
+		  	sampleText = sampleText+""+node.textContent; 
+		  } else if (node.nodeType == 1){
+		  	sampleText = sampleText+""+node.childNodes[0].textContent; 
+		  }		  
+		}
+		console.log(sampleText);		
+	} else {
+		console.log(p.textContent);
+	}
+}
