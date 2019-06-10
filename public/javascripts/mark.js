@@ -112,9 +112,18 @@ function wrap(){
     }
 }
 
+function offset(el) {
+    var rect = el.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+}
+
 function accept(){
 	var p = document.getElementById("sampleText");
+	var marks = p.getElementsByTagName("MARK");
 	var sampleText = "";
+	
 	if (p.childElementCount > 0){
 		for (let node of p.childNodes) {
 		  if(node.nodeType == 3){
@@ -127,4 +136,13 @@ function accept(){
 	} else {
 		console.log(p.textContent);
 	}
+
+	
+	console.log(marks);
+	for (var i = 0; i < marks.length; i++) {
+		console.log(offset(marks[i]).top)
+    	console.log(marks[i].childNodes[0].textContent); 
+    	console.log(marks[i].childNodes[1].innerText); 
+	}
+	
 }
