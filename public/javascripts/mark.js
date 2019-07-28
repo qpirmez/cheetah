@@ -67,17 +67,51 @@ function getLabel(){
 
 }
 
+function getStartEndSelection(selection){
+    var offset = 0;
+    var range = selection.getRangeAt(0);
+    var start = range.startOffset;
+    var end = range.endOffset;
+
+    if ( selection.baseNode.parentNode.hasChildNodes() ) { 
+        for ( var i = 0 ; selection.baseNode.parentNode.childNodes.length > i ; i++ ) { 
+            var cnode = selection.baseNode.parentNode.childNodes[i];
+            if (cnode.nodeType == document.TEXT_NODE) {
+                if ( (offset + cnode.length) > start) {
+                    break;
+                }   
+                offset = offset + cnode.length;
+            }   
+            if (cnode.nodeType == document.ELEMENT_NODE) {
+                if ( (offset + cnode.textContent.length) > start) {
+                    break;
+                }   
+                offset = offset + cnode.textContent.length;
+            }   
+        }   
+    }   
+
+    start = start + offset;
+    end = end + offset;
+    
+    return [start,end];
+}
+
+
 function wrap(){
     var selection = snapSelectionToWord();
+    var startIndex = getStartEndSelection(selection)[0];
+    var endIndex = getStartEndSelection(selection)[1];    
     var selection_text = selection.toString();
     var tag;
     var mark;
     var p;
     var text;
     var node;
-    var spanText;
     var spanTag;
-    
+        
+    console.log(startIndex);
+    console.log(endIndex);
     
     if(selection){
        if(selection.anchorNode.parentNode.tagName == "MARK"){mark = selection.anchorNode.parentNode;} 
@@ -95,11 +129,12 @@ function wrap(){
     	//Add a span around the selected text?
     	if (selection_text.length > 0){
     		mark = document.createElement('mark');
-    		spanText = document.createElement('span');
     		spanTag = document.createElement("span"); 
   		
   		    mark.textContent = selection_text;
     		mark.classList.add("c0137");
+    		mark.setAttribute('start',startIndex);
+    		mark.setAttribute('end',endIndex);    		
     			
     		spanTag.textContent = getLabel();
     		spanTag.classList.add("c0141");
@@ -112,12 +147,6 @@ function wrap(){
     }
 }
 
-function offset(el) {
-    var rect = el.getBoundingClientRect(),
-    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
-    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
-}
 
 function accept(){
 	var p = document.getElementById("sampleText");
@@ -140,7 +169,6 @@ function accept(){
 	
 	console.log(marks);
 	for (var i = 0; i < marks.length; i++) {
-		console.log(offset(marks[i]).top)
     	console.log(marks[i].childNodes[0].textContent); 
     	console.log(marks[i].childNodes[1].innerText); 
 	}
