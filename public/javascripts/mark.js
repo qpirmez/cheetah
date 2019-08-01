@@ -1,3 +1,13 @@
+var sampleText;
+
+window.onload = function() {
+	sampleText = document.getElementById("sampleText");
+	txt = sampleText.innerText;
+};
+
+
+
+
 // Simple selection function
 function snapSelectionToWord() {
     var sel;
@@ -67,12 +77,12 @@ function getLabel(){
 
 }
 
-function getStartEndSelection(selection){
+/*function getStartEndSelection(selection){
     var offset = 0;
     var range = selection.getRangeAt(0);
     var start = range.startOffset;
     var end = range.endOffset;
-
+    
     if ( selection.baseNode.parentNode.hasChildNodes() ) { 
         for ( var i = 0 ; selection.baseNode.parentNode.childNodes.length > i ; i++ ) { 
             var cnode = selection.baseNode.parentNode.childNodes[i];
@@ -95,13 +105,13 @@ function getStartEndSelection(selection){
     end = end + offset;
     
     return [start,end];
-}
+}*/
 
 
 function wrap(){
     var selection = snapSelectionToWord();
-    var startIndex = getStartEndSelection(selection)[0];
-    var endIndex = getStartEndSelection(selection)[1];    
+    var startIndex; //= getStartEndSelection(selection)[0];
+    var endIndex; //= getStartEndSelection(selection)[1];    
     var selection_text = selection.toString();
     var tag;
     var mark;
@@ -109,9 +119,18 @@ function wrap(){
     var text;
     var node;
     var spanTag;
-        
-    console.log(startIndex);
-    console.log(endIndex);
+    
+	
+	if (selection_text != ""){
+		startIndex = txt.indexOf(selection_text);
+		endIndex = txt.indexOf(selection_text)+selection_text.length;
+		
+		console.log("%cText: %c"+txt, "font-weight: bold","font-weight: normal; color: blue");
+		console.log("%cIdx Str: %c"+startIndex, "font-weight: bold","font-weight: normal; color: blue");
+		console.log("%cIdx End: %c"+endIndex, "font-weight: bold","font-weight: normal; color: blue");
+
+	}
+
     
     if(selection){
        if(selection.anchorNode.parentNode.tagName == "MARK"){mark = selection.anchorNode.parentNode;} 
@@ -119,12 +138,13 @@ function wrap(){
        else if(selection.focusNode.parentNode.tagName == "MARK"){mark = selection.focusNode.parentNode;}
        else if(selection.focusNode.nextSibling && selection.focusNode.nextSibling.tagName == "MARK"){mark = selection.focusNode.nextSibling;} 
     }  
-    
+        
+
     if(mark){
-    	p = mark.parentNode;
     	text = mark.firstChild.data; 
     	node = document.createTextNode(text)
-    	mark.parentNode.replaceChild(node, mark);   	
+    	mark.parentNode.replaceChild(node, mark); 
+
     } else {
     	//Add a span around the selected text?
     	if (selection_text.length > 0){
@@ -143,15 +163,18 @@ function wrap(){
     		var range = selection.getRangeAt(0);
     		range.deleteContents();
     		range.insertNode(mark);
+    		
     	}
     }
+    
+
 }
 
 
 function accept(){
 	var p = document.getElementById("sampleText");
 	var marks = p.getElementsByTagName("MARK");
-	var sampleText = "";
+	/*var sampleText = "";
 	
 	if (p.childElementCount > 0){
 		for (let node of p.childNodes) {
@@ -164,10 +187,9 @@ function accept(){
 		console.log(sampleText);		
 	} else {
 		console.log(p.textContent);
-	}
+	}*/
 
-	
-	console.log(marks);
+    console.log(txt);			
 	for (var i = 0; i < marks.length; i++) {
     	console.log(marks[i].childNodes[0].textContent); 
     	console.log(marks[i].childNodes[1].innerText); 
