@@ -1,4 +1,5 @@
 var sampleText;
+var markedText;
 
 window.onload = function() {
 	sampleText = document.getElementById("sampleText");
@@ -188,8 +189,12 @@ function accept(){
 	} else {
 		console.log(p.textContent);
 	}*/
+	
+	//("I like London and Berlin.", {"entities": [(7, 13, "LOC"), (18, 24, "LOC")]}),
+	
+	markedText = '("'+txt+'", {"entities": [';
 
-    console.log(txt);			
+    console.log(markedText);			
 	for (var i = 0; i < marks.length; i++) {
     	console.log(marks[i].childNodes[0].textContent); 
     	console.log(marks[i].childNodes[1].innerText); 
