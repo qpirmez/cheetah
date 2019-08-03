@@ -78,41 +78,11 @@ function getLabel(){
 
 }
 
-/*function getStartEndSelection(selection){
-    var offset = 0;
-    var range = selection.getRangeAt(0);
-    var start = range.startOffset;
-    var end = range.endOffset;
-    
-    if ( selection.baseNode.parentNode.hasChildNodes() ) { 
-        for ( var i = 0 ; selection.baseNode.parentNode.childNodes.length > i ; i++ ) { 
-            var cnode = selection.baseNode.parentNode.childNodes[i];
-            if (cnode.nodeType == document.TEXT_NODE) {
-                if ( (offset + cnode.length) > start) {
-                    break;
-                }   
-                offset = offset + cnode.length;
-            }   
-            if (cnode.nodeType == document.ELEMENT_NODE) {
-                if ( (offset + cnode.textContent.length) > start) {
-                    break;
-                }   
-                offset = offset + cnode.textContent.length;
-            }   
-        }   
-    }   
-
-    start = start + offset;
-    end = end + offset;
-    
-    return [start,end];
-}*/
-
 
 function wrap(){
     var selection = snapSelectionToWord();
-    var startIndex; //= getStartEndSelection(selection)[0];
-    var endIndex; //= getStartEndSelection(selection)[1];    
+    var startIndex; 
+    var endIndex;     
     var selection_text = selection.toString();
     var tag;
     var mark;
@@ -126,9 +96,9 @@ function wrap(){
 		startIndex = txt.indexOf(selection_text);
 		endIndex = txt.indexOf(selection_text)+selection_text.length;
 		
-		console.log("%cText: %c"+txt, "font-weight: bold","font-weight: normal; color: blue");
-		console.log("%cIdx Str: %c"+startIndex, "font-weight: bold","font-weight: normal; color: blue");
-		console.log("%cIdx End: %c"+endIndex, "font-weight: bold","font-weight: normal; color: blue");
+		//console.log("%cText: %c"+txt, "font-weight: bold","font-weight: normal; color: blue");
+		//console.log("%cIdx Str: %c"+startIndex, "font-weight: bold","font-weight: normal; color: blue");
+		//console.log("%cIdx End: %c"+endIndex, "font-weight: bold","font-weight: normal; color: blue");
 
 	}
 
@@ -175,29 +145,24 @@ function wrap(){
 function accept(){
 	var p = document.getElementById("sampleText");
 	var marks = p.getElementsByTagName("MARK");
-	/*var sampleText = "";
-	
-	if (p.childElementCount > 0){
-		for (let node of p.childNodes) {
-		  if(node.nodeType == 3){
-		  	sampleText = sampleText+""+node.textContent; 
-		  } else if (node.nodeType == 1){
-		  	sampleText = sampleText+""+node.childNodes[0].textContent; 
-		  }		  
-		}
-		console.log(sampleText);		
-	} else {
-		console.log(p.textContent);
-	}*/
+	var startIndex;
+	var endIndex;
+	var label;
 	
 	//("I like London and Berlin.", {"entities": [(7, 13, "LOC"), (18, 24, "LOC")]}),
 	
 	markedText = '("'+txt+'", {"entities": [';
-
-    console.log(markedText);			
+    		
 	for (var i = 0; i < marks.length; i++) {
-    	console.log(marks[i].childNodes[0].textContent); 
-    	console.log(marks[i].childNodes[1].innerText); 
+		startIndex = marks[i].attributes.getNamedItem("start").value;
+		endIndex = marks[i].attributes.getNamedItem("end").value;
+		label = marks[i].childNodes[1].innerText;		
+		markedText = markedText + '('+startIndex+', '+endIndex+', "'+label+'"),';
 	}
+	
+	markedText = markedText.slice(0, -1);
+	
+	markedText = markedText + ']})';	
+	console.log(markedText);
 	
 }
