@@ -3,7 +3,13 @@
 {
 
 
-    const defaultText = 'When Sebastian Thrun started working on self-driving cars at Google in 2007, few people outside of the company took him seriously. I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasnt worth talking to said Thrun, now the co-founder and CEO of online higher education startup Udacity, in an interview with Recode earlier this week.A little less than a decade later, dozens of self-driving startups have cropped up while automakers around the world clamor, wallet in hand, to secure their place in the fast-moving world of fully automated transportation.';
+   // UI
+
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
+
+
+    /*const defaultText = 'When Sebastian Thrun started working on self-driving cars at Google in 2007, few people outside of the company took him seriously. I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasnt worth talking to said Thrun, now the co-founder and CEO of online higher education startup Udacity, in an interview with Recode earlier this week.A little less than a decade later, dozens of self-driving startups have cropped up while automakers around the world clamor, wallet in hand, to secure their place in the fast-moving world of fully automated transportation.';*/
 
     const defaultEnts = ['person', 'org', 'gpe', 'loc', 'product', 'date', 'time' ];
     const defaultModel = 'en_core_web_sm';
@@ -16,38 +22,31 @@
     const displacy = new displaCyENT(
     	'http://127.0.0.1:8000/test', 
     	{container: '#displacy',
-        defaultText: defaultText,
-        defaultModel: defaultModel,
-        defaultEnts: defaultEnts,
+        //defaultText: defaultText,
+        //defaultModel: defaultModel,
+        //defaultEnts: defaultEnts,
         onStart: loading,
         onSuccess: loading,
         //onRender: updateHTML,
         onError: onError}
     );
 
-
-   // UI
-
-    const $ = document.querySelector.bind(document);
-    const $$ = document.querySelectorAll.bind(document);
-
-
     // First Run
 
-    document.addEventListener('DOMContentLoaded', () => {
+    /*document.addEventListener('DOMContentLoaded', () => {
         const text = getQueryVar('text') || defaultText;
         const model = getQueryVar('model') || defaultModel;
         const ents = (getQueryVar('ents')) ? getQueryVar('ents').split(',') : defaultEnts;
 
         if(getQueryVar('text')) updateView(text, model, ents);
         displacy.parse(text, model, ents);
-        /*$('#css').value = renderCSS('style.css');*/
-    });
+        //$('#css').value = renderCSS('style.css');
+    });*/
 
     // Run Demo
 
     const run = (
-        text = $('#input').value || defaultText,
+        text = $('#input').value /*|| defaultText*/,
         ents = defaultEnts /*[...$$('[name="ents"]:checked')].map(ent => ent.value)*/,
         model = /*$('[name="model"]:checked').value ||*/ defaultModel ) => {
             displacy.parse(text, model, ents);
@@ -95,12 +94,12 @@
 
     // Get URL Query Variables
 
-    const getQueryVar = (key) => {
+    /*const getQueryVar = (key) => {
        const query = window.location.search.substring(1);
        const params = query.split('&').map(param => param.split('='));
 
        for(let param of params) if(param[0] == key) return decodeURIComponent(param[1]);
        return false;
-    }
+    }*/
 
 }
