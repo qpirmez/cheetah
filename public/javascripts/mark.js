@@ -4,6 +4,8 @@ var markedText;
 window.onload = function() {
 	sampleText = document.getElementById("sampleText");
 	txt = sampleText.innerText;
+	buildLabelMenu();
+
 };
 
 
@@ -58,23 +60,55 @@ function snapSelectionToWord() {
     }
 }
 
+function addLabel(label){
+	
+	var inputElement = document.createElement("input");
+    inputElement.setAttribute("type", "radio");
+    inputElement.setAttribute("id", label);
+    inputElement.setAttribute("name", "radios");
+    inputElement.setAttribute("value", label);
+    
+    var labelElement = document.createElement("label");
+    var labelName = document.createTextNode(label);
+    labelElement.setAttribute("for", label);
+    labelElement.appendChild(labelName);
+
+    document.getElementById("tagger-radio-toolbar").appendChild(inputElement);
+    document.getElementById("tagger-radio-toolbar").appendChild(labelElement);
+
+
+}
+
+function buildLabelMenu(){
+    var labels = ['person', 'org', 'gpe', 'loc', 'product', 'date', 'time' ];
+	labels.forEach(addLabel);
+}
+
 function getLabel(){
-	
+
 	var label;
-	
-	if (document.getElementById('radio1').checked) {
-		label = document.getElementById('radio1').value;
-	} else if (document.getElementById('radio2').checked) {
-		label = document.getElementById('radio2').value;
-	} else if (document.getElementById('radio3').checked) {
-		label = document.getElementById('radio3').value;
-	} else if (document.getElementById('radio4').checked) {
-		label = document.getElementById('radio4').value;
-	} else if (document.getElementById('radio5').checked) {
-		label = document.getElementById('radio5').value;
+
+	var list= document.getElementById("tagger-radio-toolbar").getElementsByTagName("input");
+	for (var i = 0; i < list.length; i++) {	    
+	    if(list[i].checked == true){
+	    	label = list[i].value;
+	    	return label;
+	    }
 	}
+		
+	//if (document.getElementById('radio1').checked) {
+	//	label = document.getElementById('radio1').value;
+	//} else if (document.getElementById('radio2').checked) {
+	//	label = document.getElementById('radio2').value;
+	//} else if (document.getElementById('radio3').checked) {
+	//	label = document.getElementById('radio3').value;
+	//} else if (document.getElementById('radio4').checked) {
+	//	label = document.getElementById('radio4').value;
+	//} else if (document.getElementById('radio5').checked) {
+	//	label = document.getElementById('radio5').value;
+	//}
 	
-	return label;
+	//return label;
 
 }
 
