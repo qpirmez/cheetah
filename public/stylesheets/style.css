@@ -34,14 +34,17 @@
 
 .radio-toolbar label {
   display: inline-block;
-  background-color: #ddd;
+  background-color: #dfe3ee;
   padding: 4px 11px;
   margin-left: 3px;
   cursor: pointer;
+  border-radius: 0.35em;
+
 }
 
 .radio-toolbar input[type="radio"]:checked+label {
-  background-color: #bbb;
+  color: #ffffff;
+  background-color: #3b5998;
 }
 
 [data-entity] {
@@ -100,5 +103,41 @@
 
 [data-entity][data-entity="gpe"]::after {
     background: rgb(47, 187, 171);
+}
+
+[data-entity][data-entity="loc"] {
+    background: rgba(253, 151, 32, 0.2);
+    border-color: rgb(253, 151, 32);
+}
+
+[data-entity][data-entity="loc"]::after {
+    background: rgb(253, 151, 32);
+}
+
+[data-entity][data-entity="product"] {
+    background: rgba(142,125,255, 0.2);
+    border-color: rgb(142,125,255);
+}
+
+[data-entity][data-entity="product"]::after {
+    background: rgb(142,125,255);
+}
+
+[data-entity][data-entity="date"] {
+    background: rgba(253,151,32, 0.2);
+    border-color: rgb(253,151,32);
+}
+
+[data-entity][data-entity="date"]::after {
+    background: rgb(253,151,32);
+}
+
+[data-entity][data-entity="time"] {
+    background: rgba(253,151,32, 0.2);
+    border-color: rgb(253,151,32);
+}
+
+[data-entity][data-entity="time"]::after {
+    background: rgb(253,151,32);
 }
 

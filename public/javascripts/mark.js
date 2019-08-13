@@ -157,13 +157,14 @@ function wrap(){
     		spanTag = document.createElement("span"); 
   		
   		    mark.textContent = selection_text;
-    		mark.classList.add("c0137");
+    		//mark.classList.add("c0137");
+    		mark.setAttribute('data-entity',getLabel());
     		mark.setAttribute('start',startIndex);
     		mark.setAttribute('end',endIndex);    		
     			
-    		spanTag.textContent = getLabel();
-    		spanTag.classList.add("c0141");
-    		mark.appendChild(spanTag);
+    		//spanTag.textContent = getLabel();
+    		//spanTag.classList.add("c0141");
+    		//mark.appendChild(spanTag);
     		
     		var range = selection.getRangeAt(0);
     		range.deleteContents();
@@ -190,7 +191,8 @@ function accept(){
 	for (var i = 0; i < marks.length; i++) {
 		startIndex = marks[i].attributes.getNamedItem("start").value;
 		endIndex = marks[i].attributes.getNamedItem("end").value;
-		label = marks[i].childNodes[1].innerText;		
+		//label = marks[i].childNodes[1].innerText;	
+		label = marks[i].attributes.getNamedItem("data-entity").value;
 		markedText = markedText + '('+startIndex+', '+endIndex+', "'+label+'"),';
 	}
 	
