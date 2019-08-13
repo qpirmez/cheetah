@@ -47,6 +47,17 @@
   background-color: #3b5998;
 }
 
+#step1-uploading{
+}
+
+#step2-tagging{
+	display: none;
+}
+
+#step3-confirm{
+	display: none;
+}
+
 [data-entity] {
     padding: 0.25em 0.35em;
      margin: 0px 0.25em;

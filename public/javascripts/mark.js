@@ -96,20 +96,6 @@ function getLabel(){
 	    }
 	}
 		
-	//if (document.getElementById('radio1').checked) {
-	//	label = document.getElementById('radio1').value;
-	//} else if (document.getElementById('radio2').checked) {
-	//	label = document.getElementById('radio2').value;
-	//} else if (document.getElementById('radio3').checked) {
-	//	label = document.getElementById('radio3').value;
-	//} else if (document.getElementById('radio4').checked) {
-	//	label = document.getElementById('radio4').value;
-	//} else if (document.getElementById('radio5').checked) {
-	//	label = document.getElementById('radio5').value;
-	//}
-	
-	//return label;
-
 }
 
 
@@ -157,15 +143,11 @@ function wrap(){
     		spanTag = document.createElement("span"); 
   		
   		    mark.textContent = selection_text;
-    		//mark.classList.add("c0137");
+
     		mark.setAttribute('data-entity',getLabel());
     		mark.setAttribute('start',startIndex);
     		mark.setAttribute('end',endIndex);    		
-    			
-    		//spanTag.textContent = getLabel();
-    		//spanTag.classList.add("c0141");
-    		//mark.appendChild(spanTag);
-    		
+    			    		
     		var range = selection.getRangeAt(0);
     		range.deleteContents();
     		range.insertNode(mark);
@@ -175,7 +157,6 @@ function wrap(){
     
 
 }
-
 
 function accept(){
 	var p = document.getElementById("sampleText");
@@ -200,5 +181,31 @@ function accept(){
 	
 	markedText = markedText + ']})';	
 	console.log(markedText);
+	
+}
+
+function step2(){
+	var step1 = document.getElementById("step1-uploading");
+	var step2 = document.getElementById("step2-tagging");
+	var completedStep = document.getElementById("step1");
+	var activeStep = document.getElementById("step2");
+	step1.style.display = "none";
+	step2.style.display = "block";
+	completedStep.classList.add("completed");
+	activeStep.classList.add("active");
+
+	
+}
+
+function step3(){
+	var step2 = document.getElementById("step2-tagging");
+	var step3 = document.getElementById("step3-confirm");
+	var completedStep = document.getElementById("step2");
+	var activeStep = document.getElementById("step3");
+	step2.style.display = "none";
+	step3.style.display = "block";
+	completedStep.classList.add("completed");
+	activeStep.classList.add("active");
+	accept();
 	
 }

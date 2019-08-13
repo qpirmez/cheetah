@@ -6,31 +6,34 @@ block content
   script(src="javascripts/mark.js")
   
   div(class="ui ordered top attached steps")
-    div(class="completed step")
+    div(class="active step" id="step1")
       div(class="content")
         div(class="title") Uploading
         div(class="description") Choose a file to upload
-    div(class="completed step")
+    div(class="step" id="step2")
       div(class="content")
         div(class="title") Tagging
         div(class="description") Tag content with Named Entity
-    div(class="active step")
+    div(class="step" id="step3")
       div(class="content")
         div(class="title") Confirm
         div(class="description") Verify the tag details  
 
   div(class="ui raised very  padded container attached segment" id="step1-uploading")
-    p step 1 
+    h3 Uploading 
+    button(class="ui right blue labeled icon button" onClick="step2()") Next
+      i(class="right arrow icon")    	
        
   div(class="ui raised very  padded container attached segment" id="step2-tagging")
+    h3 Tagging
     div(class="radio-toolbar" id="tagger-radio-toolbar")
     div(class="ui clearing divider")
     p(id="sampleText" onmouseup="wrap()") Facebook, Inc. is an American online social media and social networking service company  
-    button(class="ui blue labeled submit icon button" id="accept" onClick="accept()") Validate
-      i(class='icon edit')
+    button(class="ui blue labeled submit icon button" id="accept" onClick="step3()") Next
+      i(class="right arrow icon")
 
-  div(class="ui raised very  padded container attached segment" id="step1-uploading")
-    p step 3
+  div(class="ui raised very  padded container attached segment" id="step3-confirm")
+    h3 Confirm
 
 
  
