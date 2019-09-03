@@ -1,9 +1,19 @@
-var sampleText;
+var textToMark = [
+"Uber blew through 1 million a week",
+"Android Pay expands to Canada",
+"Who is Shaka Khan?",
+"Facebook, Inc. is an American online social media and social networking service company",
+"I like London and Berlin"
+];
+var txt;
 var markedText;
+var dataToTrain = [];	
+
 
 window.onload = function() {
 	sampleText = document.getElementById("sampleText");
-	txt = sampleText.innerText;
+	txt = textToMark.pop();
+	sampleText.innerHTML = txt;
 	buildLabelMenu();
 
 };
@@ -158,7 +168,7 @@ function wrap(){
 
 }
 
-function accept(){
+function getMarkedText(){
 	var p = document.getElementById("sampleText");
 	var marks = p.getElementsByTagName("MARK");
 	var startIndex;
@@ -172,16 +182,40 @@ function accept(){
 	for (var i = 0; i < marks.length; i++) {
 		startIndex = marks[i].attributes.getNamedItem("start").value;
 		endIndex = marks[i].attributes.getNamedItem("end").value;
-		//label = marks[i].childNodes[1].innerText;	
 		label = marks[i].attributes.getNamedItem("data-entity").value;
 		markedText = markedText + '('+startIndex+', '+endIndex+', "'+label+'"),';
 	}
 	
-	markedText = markedText.slice(0, -1);
-	
-	markedText = markedText + ']})';	
-	console.log(markedText);
-	
+	markedText = markedText.slice(0, -1);	
+	markedText = markedText + ']})';
+		
+	return markedText;	
+}
+
+function send(dataToTrain) {
+        if(typeof this.onStart === 'function') this.onStart();
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://127.0.0.1:8000/number', true);
+        xhr.setRequestHeader('Content-type', 'text/plain');
+
+        xhr.onreadystatechange = () => {
+            if(xhr.readyState === 4 && xhr.status === 200) {
+                if(typeof this.onSuccess === 'function') this.onSuccess();
+                console.log(JSON.parse(xhr.responseText));
+            }
+
+            else if(xhr.status !== 200) {
+                if(typeof this.onError === 'function') this.onError(xhr.statusText);
+            }
+        }
+
+        xhr.onerror = () => {
+            xhr.abort();
+            if(typeof this.onError === 'function') this.onError();
+        }
+
+        xhr.send(JSON.stringify({ dataToTrain }));
 }
 
 function step2(){
@@ -202,10 +236,31 @@ function step3(){
 	var step3 = document.getElementById("step3-confirm");
 	var completedStep = document.getElementById("step2");
 	var activeStep = document.getElementById("step3");
+	var p;
 	step2.style.display = "none";
 	step3.style.display = "block";
 	completedStep.classList.add("completed");
 	activeStep.classList.add("active");
-	accept();
-	
+
+	dataToTrain.forEach(function(element) {
+		p = document.createElement('p');
+		p.textContent = element;
+		step3.appendChild(p);	
+	}); 
+
+	send(dataToTrain);
 }
+
+function validateTagging(){	
+	var sampleText = document.getElementById("sampleText");
+	dataToTrain.push(getMarkedText());
+	txt = textToMark.pop();
+	sampleText.innerHTML = txt;
+}
+
+	
+	
+	
+	
+	
+	
