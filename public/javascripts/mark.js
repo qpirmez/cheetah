@@ -9,17 +9,13 @@ var txt;
 var markedText;
 var dataToTrain = [];	
 
-
+// On first page load, get the first phrase to tag and build the label menu
 window.onload = function() {
 	sampleText = document.getElementById("sampleText");
 	txt = textToMark.pop();
 	sampleText.innerHTML = txt;
 	buildLabelMenu();
-
 };
-
-
-
 
 // Simple selection function
 function snapSelectionToWord() {
@@ -85,8 +81,6 @@ function addLabel(label){
 
     document.getElementById("tagger-radio-toolbar").appendChild(inputElement);
     document.getElementById("tagger-radio-toolbar").appendChild(labelElement);
-
-
 }
 
 function buildLabelMenu(){
@@ -104,35 +98,28 @@ function getLabel(){
 	    	label = list[i].value;
 	    	return label;
 	    }
-	}
-		
+	}		
 }
-
 
 function wrap(){
     var selection = snapSelectionToWord();
+    var selectionText = selection.toString();
     var startIndex; 
     var endIndex;     
-    var selection_text = selection.toString();
-    var tag;
     var mark;
-    var p;
     var text;
     var node;
     var spanTag;
     
-	
-	if (selection_text != ""){
-		startIndex = txt.indexOf(selection_text);
-		endIndex = txt.indexOf(selection_text)+selection_text.length;
+	if (selectionText != ""){
+		startIndex = txt.indexOf(selectionText);
+		endIndex = txt.indexOf(selectionText)+selectionText.length;
 		
 		//console.log("%cText: %c"+txt, "font-weight: bold","font-weight: normal; color: blue");
 		//console.log("%cIdx Str: %c"+startIndex, "font-weight: bold","font-weight: normal; color: blue");
 		//console.log("%cIdx End: %c"+endIndex, "font-weight: bold","font-weight: normal; color: blue");
-
 	}
 
-    
     if(selection){
        if(selection.anchorNode.parentNode.tagName == "MARK"){mark = selection.anchorNode.parentNode;} 
        else if(selection.anchorNode.nextSibling && selection.anchorNode.nextSibling.tagName == "MARK" ) {mark = selection.anchorNode.nextSibling;}
@@ -148,11 +135,11 @@ function wrap(){
 
     } else {
     	//Add a span around the selected text?
-    	if (selection_text.length > 0){
+    	if (selectionText.length > 0){
     		mark = document.createElement('mark');
     		spanTag = document.createElement("span"); 
   		
-  		    mark.textContent = selection_text;
+  		    mark.textContent = selectionText;
 
     		mark.setAttribute('data-entity',getLabel());
     		mark.setAttribute('start',startIndex);
