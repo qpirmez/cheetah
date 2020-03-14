@@ -16,7 +16,7 @@
     
 
     const displacy = new displaCyENT(
-    	'http://127.0.0.1:8000/ner', 
+    	'http://127.0.0.1:8000/getEntities', 
     	{container: '#displacy',
         onStart: loading,
         onSuccess: loading,

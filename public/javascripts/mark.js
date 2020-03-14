@@ -183,7 +183,7 @@ function send(dataToTrain) {
         if(typeof this.onStart === 'function') this.onStart();
 
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:8000/number', true);
+        xhr.open('POST', 'http://127.0.0.1:8000/trainModel', true);
         xhr.setRequestHeader('Content-type', 'text/plain');
 
         xhr.onreadystatechange = () => {

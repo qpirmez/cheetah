@@ -14,7 +14,7 @@ class HandleCORS(object):
         if req.method == 'OPTIONS':
             raise HTTPStatus(falcon.HTTP_200, body='\n')
 
-class ObjRequstClass:
+class getEntities:
 	def on_post(self,req,resp):
 		if req.content_length:
 		    data = json.load(req.stream)
@@ -22,7 +22,14 @@ class ObjRequstClass:
 		annotations = [{'start': ent.start_char, 'end': ent.end_char, 'type': ent.label_} for ent in doc.ents]
 		resp.body = json.dumps(annotations)
 				
+class trainModel:
+	def on_post(self,req,resp):
+		if req.content_length:
+		    data = json.load(req.stream)
+		resp.body = json.dumps(data['dataToTrain'])
+				
 api = falcon.API(middleware=[HandleCORS() ])
-api.add_route('/ner', ObjRequstClass())
+api.add_route('/getEntities', getEntities())
+api.add_route('/trainModel', trainModel())
 
 serve(api,host='127.0.0.1',port=8000)
