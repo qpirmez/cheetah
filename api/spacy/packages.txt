@@ -1,0 +1,8 @@
+cymem==2.0.3
+Cython==0.29.15
+falcon==2.0.0
+murmurhash==1.0.2
+numpy==1.18.1
+preshed==3.0.2
+spacy==2.2.4
+waitress==1.4.3
